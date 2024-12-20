@@ -1,0 +1,211 @@
+GCP ROADMAP
+1. Networking Services
+2. Compute Services
+3. IAM (Identity and Access Management) 
+4. Storage Services
+5. Database Services
+6. Logging
+7. Monitoring
+8. Security (Cloud Armor, security command center)
+9. Fin- ops Practices
+10.GKE Clusters 
+11.Terraform(IAAC)
+12.Linux Basics
+
+
+Ways to access GCP
+
+- Console
+- Cloud Shell or SDK (gcloud, gstuil, bq etc.)
+- APIS
+- GCP console Mobile App
+
+
+JOB - Cloud Infra Engineer
+
+--> Provision infra for client and manage it. Terraform -(language- HCL/JSON).
+
+
+1) Networking
+
+- VPC, Private & public IP ranges, Network, CIDR Ranges, Subnets, router, routing table, routes, firewall rules, VPC peering , shared VPC, 
+ports, protocols, Ip range(source & destination) and priority. Identity Aware Proxy IAP, NAT( to be covered later).
+
+2) Compute
+
+- Compute Engine (VM), virtualization, containerization, Regions , AZ's( Zones), Machine Config ( Classes(General purpose, Compute, Memory, storage Optimized), GPU's, Custom (N1 & N2) & Predefined Machine types, Spot-preemptable and Standard VMs diff., Availability policies( on maintenance - migrate, automatic restart options), Boot Disk - ( VM Images - Public & Custom - you select - OS, version of OS, and disk type and size)+ Disk Snapshots), Instance schedule). Service accounts , Firewall, Observability - Ops Agent, Network tags , VM Metadata, Data encryption, sole tenancy(Phys server 1 yrs or 3 yrs).
+
+
+- IG - MIG & UMIG (active -passive config), health checks, (extra- blue green deployment, rolling updates), load balancing, autoscaling , auto healing etc., instance template (helps to create identical vm - its a format having fixed vm configuration).
+
+- App Engine - Directly bring your code to google and google will manage infra for you app.
+- Cloud Run - Bring your containers to google and google will manage the infra.
+
+3) IAM ( Identity and Access Management)
+
+- Principle of least privilege , diff b/w authentication and authorization , SSO(IAM federation) , user account , service accounts , groups, permissions, roles (Basic , pre- defined and custom roles), Organization policies( ex-disable vm creation with external IP , Mandatory Use of Customer-Managed Encryption Keys (CMEK).) 
+
+
+4) Storage Services in GCP
+
+- 3 types ( Object Storage - Cloud Storage , Block Storage- Persistent Disks, File/Folder Shared Storage - File store ) , 
+
+
+Cloud Storage - Globally unique name, Location type(Multi- region , dual region , regional) , Auto class , storage classes( Standard , Nearline <1month, Cold line < 3months , Archival < 1year access data), Public Access ( Uniform & Fine grained) , Data Protection - Soft delete policy , object versioning and retention policy. Data encryption ( Google-managed encryption key- Keys owned by Google & Cloud KMS key- Keys owned by customers) .Public access disabled , IAM and ACL & Lifecycles Rules.
+
+
+Block Storage- Disks , Images , Snapshots , Snapshot schedules, mounting disks to vm  , persistent disk types ( standard PD, balanced PD, SSD PD extreme PD etc.) Encryption types - Google managed, customer owned/created , customer supplied.) ways to create disks ( blank , from image & snapshot) 
+
+
+Shared Storage - File store
+
+
+5) Databases
+
+2 types ( SQL(Relational) and NO- SQL Databases (Non-Relational) ), 
+
+A. SQL Databases- Managed database Service - data stored in tables
+
+Cloud SQL( Managed database service by google - MySQL, PostgreSQL and Sql server)
+
+primary and secondary configuration, failover, read replicas, vcpu, memory and storage, regional service, instance id, name & password, version & subversion of database engine, single zone & multi zone ( High availability) , configuration of instance(vm) , point in time recovery , automated backups , delete protection , maintenance window, Labels , Networking (Public and private IP) , Vertical auto scaling.
+
+Cloud Spanner - Fully Managed database service by google. Costly service.
+
+
+B. NO SQL- Managed database Service 
+
+
+Fire store - No SQL, Key-value format used to store data.(document , images etc.)
+
+
+Bigtable - For Big data it is used.
+
+
+6.) Logging 
+
+Logs will be generated for almost everything you do in GCP (Activity/API calls, Application & Infra Related) some are enable by default and some u can enable , Logs are of 4 types ( Audit , Network , agent Logs & Service Logs). 
+
+Audit - API Calls log , Admin Activity , System Event , Access Transparency logs and it will be stored in _Required Bucket for 400 days by default, its locked for deletion and no charge.
+
+Network( VPC flow logs , firewalls hit logs , NAT Gateway logs etc.), agent Logs (logs of others cloud providers) & Service Logs (Managed services logs)
+
+Ex- data access log, policy Denied audit logs and all other logs will be stored in _default bucket for 30days.
+
+-->  you can export your logs to other places using a log router using route sink.
+
+
+7.) Monitoring 
+
+Metrics, Alerts, SLO , SLA , uptime checks, Ops Agent , Dashboards , Resource metrics & custom metrics , VM metrics will be related CPU( ex- 
+CPU Utilization, process running) , memory (Memory Utilization, memory used) , Network (sent , received packets) and disk(IOPS & throughput, disk used etc.) .
+
+Extra - Trace explorer( to view latency data of applications) , error reporting ( create alerts or monitor any errors when it comes & troubleshoot)
+
+
+8.) Fin- ops Practices in GCP
+
+--> understanding cloud expenses thought billing dashboard (Reports) , Optimizing resource & service usage( autoscaling, rightsizing vms, reserving vms, VPC peering and storage classes selection etc.), implementing cost controls ( Budgets & alerts , Quotas , cost allocation tags can be used).
+
+monitoring and Logging, cost optimization recommendations from google.
+
+
+9). Security in GCP (Cloud Armor & security command center)
+
+Cloud Armor - network security service provided by GCP to protect against DDOS and other application attacks - offers rich set of WAF rules , It works at external facing LB level. You need to provide a target which will be your backend service of LB. U can opt for Adaptive protection configuration managed service which uses Machine Learning to protect from attacks ( Costly service).
+
+Cloud Armor Adaptive Protection helps protect backend services from Layer 7 DDoS attacks by learning normal traffic patterns, detecting and alerting on potential attacks, and providing Cloud Armor WAF rules to mitigate them
+
+
+Security Policies(set of rules which work on layer 3 to layer 7 with respect to incoming traffic) , Rules language , preconfigured WAF rules. Rules consists of a match condition and action- allow, deny or redirect. 
+Conditions is of two types Basic mode (IP addresses/ranges only) & Advanced mode ( here you can create custom condition bases on attributes or evaluatePreconfiguredWaf('xss-v33-stable', {'sensitivity': 1}) statements. 
+
+Attributes Example- Field, origin.asn, origin.ip, origin.region_code, request.method ,request.headers ,request.path,request.scheme,request.query.
+
+Description-
+ASN of the origin sending the request
+IP address of the origin sending the request
+The Unicode country code associated with the origin IP
+The HTTP request method, such as 'GET', 'POST'
+A string-to-string map of the HTTP request headers
+The requested HTTP URL path
+The HTTP URL scheme such as http, https
+The HTTP URL query in the format of name1=value&name2=value2. No decoding is performed
+
+Evaluate Preconfigured Waf Statements- are set of preconfigured WAF rules to protect you against - SQL injection(sqli-v33-stable) , Cross-site scripting(xss-v33-stable) , Local file inclusion(lfi-v33-stable), Remote file inclusion, Protocol attack, PHP injection attack , Java attack	etc.
+
+Suppose some hacker is trying a DDOS attack on your app. How will you prevent DDOS attack to your web app in GCP using cloud armor. How will you implement Rate Limiting please give steps.
+
+Option 1. Add rules to your security policy to filter out malicious traffic. This can include IP blacklisting, geo-blocking, and custom rules to block known attack patterns.
+
+Option 2. Use Cloud Armor’s Adaptive Protection to detect and mitigate Layer 7 DDoS attacks. This feature uses machine learning to identify unusual traffic patterns and block malicious requests in real-time.
+
+Option 3. Select your security policy and add a new rule for rate limiting. Set the maximum number of requests allowed per time unit (e.g., 100 requests per minute).Specify the action to take when the limit is exceeded (e.g., block or throttle requests).
+
+
+
+Security Command Center - 
+
+GCP centralized vulnerability and threat detecting & reporting Service, can be activated at project or org level, two types - standard and premium.
+Services u can enable in standard - web security scanner, rapid vulnerability detection , event threat detection , container threat detection , virtual machine threat detection.
+Example findings - open RDP , open SSH, MFA not enforced, Non org IAM member, Public bucket ACL, public Ip address, misconfigurations etc.
+
+
+10.GKE Clusters- Standard / Autopilot
+
+Standard- Cluster Name, location type (Zonal/Regional), control panel version(static), 
+
+Node Pool - name -default pool, number of nodes per zone, enable cluster auto scaler, automation ( auto repair & upgrade nodes to version) max surge -1 , max unavailable -0), 
+
+Nodes config-Machine type, boot disk , vcpu , ram , memory etc
+Nodes Networking -Maximum pods per node 
+Nodes Security-
+Nodes Metadata-
+
+Cluster
+
+Automation - Set Maintenance window, enable vertical pod autoscaling, enable node auto provisioning 
+Networking - select network, node subnet, Network access- Public/private, for private- access you can provide your organizations CIDR range
+Security-
+Metadata- 
+Features- enable cloud logging and monitoring 
+
+
+Control Plane: Managed by Google, no IPs needed from your network.
+Nodes: Get IPs from the primary subnetwork range.
+Pods: Get IPs from a secondary IP range associated with the subnetwork. 
+Include primarary and secondary ip range in terraform . we have 3 nodes and max number of pods that can be created on each node is 110. Expalin how many ip address will be sufficient .
+
+Ans- Summary:
+Primary IP Range: Ensure the range 10.0.0.0/16 has at least 3 IP addresses available.
+Secondary IP Range: Ensure the range 10.1.0.0/16 has at least 330 IP addresses available.
+
+
+11.) Terraform
+
+
+
+
+12.) Linux 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
